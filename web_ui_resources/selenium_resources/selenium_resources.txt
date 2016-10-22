@@ -1,0 +1,35 @@
+*** Variables ***
+| ${BROWSER} | chrome
+
+*** Settings ***
+| Library | Selenium2Library | implicit_wait=5
+| Library | BuiltIn
+
+*** Keywords ***
+| Open AUT
+| | Open browser | https://fringkandy.kandy.io/ | ${BROWSER}
+| | Capture Page Screenshot
+ 
+| Login
+| | Wait Until Page Contains Element | xpath=//div[@class='current-flag']/div[contains(@class, 'flag flags')]
+| | Execute Javascript | app.call("registration").loginUser("380661849888@fring.com","3af5d510d76f4e");
+| | Click Element | xpath=//button[text()='No']
+| | Capture Page Screenshot
+
+| Header Container Click Keypad Button
+| | Click Element | xpath=//button[@title='Keypad']
+| | Capture Page Screenshot
+
+| Dialer Top Bar Check That Flag Is Present
+| | [Arguments] | ${flag}
+| | Wait Until Page Contains Element | xpath=//div[@class='current-flag']/div[@class='flag flags ${flag}']
+| | Capture Page Screenshot
+
+| Dialer Top Bar Type Number
+| | [Arguments] | ${country_code} | ${number}
+| | Input Text | //div[@class='number-holder enabled']/input | ${country_code} ${number}
+| | Capture Page Screenshot
+
+| Dialer Footer Click Compose Message Button
+| | Click Element | xpath=//button[@class='chat-button']
+| | Capture Page Screenshot

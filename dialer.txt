@@ -1,0 +1,18 @@
+*** Variables ***
+| ${flag} | UA |
+| ${country_code} | +380 |
+| ${number} | 9999999 |
+| ${RESOURCE} | web_ui_resources |
+
+*** Settings ***
+| Resource | web_ui_resources/keywords.txt 
+
+*** Test Cases ***
+| Compose Message Test
+| | Given User Opened AUT
+| | When User Logins
+| | And User Opens Dialer
+| | Then User Verifies That Flag Is Present | ${flag}
+| | When User Types Into Number Placeholder | ${country_code} | ${number}
+| | And User Clicks Compose Message Button
+| | Then User Verifies That Message Header Is | ${country_code} | ${number}

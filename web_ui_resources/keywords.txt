@@ -1,0 +1,32 @@
+*** Variables ***
+| ${BROWSER} | chrome
+
+*** Settings ***
+| Library | BuiltIn |
+| Resource | selenium_resources/selenium_resources.txt |
+
+*** Keywords ***
+| Given User Opened AUT
+| | Open AUT
+
+| When User Logins
+| | Login
+
+| And User Opens Dialer
+| | Header Container Click Keypad Button
+
+| Then User Verifies That Flag Is Present
+| | [Arguments] | ${flag}
+| | Dialer Top Bar Check That Flag Is Present | ${flag}
+
+| When User Types Into Number Placeholder
+| | [Arguments] | ${country_code} | ${number}
+| | Dialer Top Bar Type Number | ${country_code} | ${number}
+
+| And User Clicks Compose Message Button
+| | Dialer Footer Click Compose Message Button
+
+| Then User Verifies That Message Header Is
+| | [Arguments] | ${country_code} | ${number}
+| | Wait Until Element Contains | xpath=//div[@class='name']/span[@data-bind='text: userName'] | ${country_code}${number}
+| | Element Should Contain | xpath=//div[@class='name']/span[@data-bind='text: userName'] | ${country_code}${number}
